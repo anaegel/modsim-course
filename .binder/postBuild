@@ -3,9 +3,11 @@ mkdir $HOME/opt
 cd $HOME/opt
 git clone https://github.com/UG4/ughub
 
+export UG4_ROOT=$HOME/opt/ug4
+
 # UG4
-mkdir $HOME/opt/ug4
-cd $HOME/opt/ug4
+mkdir $UG4_ROOT
+cd $UG4_ROOT
 ../ughub/ughub init
 ../ughub/ughub install Examples
 cd $HOME/opt/ug4
