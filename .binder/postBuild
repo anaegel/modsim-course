@@ -4,7 +4,7 @@ git clone https://github.com/UG4/ughub
 mkdir $HOME/ug4
 cd $HOME/ug4
 ../ughub/ughub init
-ughub install Examples
+../ughub/ughub install Examples
 cd $HOME/ug4
 mkdir build
 cd build
