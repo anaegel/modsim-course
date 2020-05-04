@@ -8,4 +8,4 @@ cd $HOME/ug4
 cd $HOME/ug4
 mkdir build
 cd build
-cmake -DCMAKE_BUILD_TYPE=Release ..
+cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release -DConvectionDiffusion=ON ..
