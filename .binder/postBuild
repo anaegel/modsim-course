@@ -4,10 +4,10 @@ cd $HOME/opt
 git clone https://github.com/UG4/ughub
 
 export UG4_ROOT=$HOME/opt/ug4
-echo "Found ug4: $(UG4_ROOT)"
+echo "Found ug4: $UG4_ROOT"
 
 export CONDA_PREFIX="$(python -c 'import sys; print(sys.prefix)')"
-echo "Found conda: $(CONDA_PREFIX)"
+echo "Found conda: $CONDA_PREFIX"
 
 
 # UG4
