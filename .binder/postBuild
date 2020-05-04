@@ -12,7 +12,7 @@ cd $HOME/opt/ug4
 mkdir build
 cd build
 cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release -DConvectionDiffusion=ON ..
-make -j16
+# make -j16
 
 # Xeus kernel
 cd $HOME/opt/
