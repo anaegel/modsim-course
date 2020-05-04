@@ -21,6 +21,7 @@ cd $HOME/opt/
 git clone https://github.com/UG4/xeus-ug4
 mkdir xeus-ug4/build
 cd xeus-ug4/build
-cmake -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang ..
+# cmake -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang ..
+cmake -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX ..
 # make 
 # make install
