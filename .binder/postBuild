@@ -2,6 +2,8 @@
 mkdir $HOME/opt
 cd $HOME/opt
 git clone https://github.com/UG4/ughub
+
+# UG4
 mkdir $HOME/opt/ug4
 cd $HOME/opt/ug4
 ../ughub/ughub init
@@ -10,4 +12,13 @@ cd $HOME/opt/ug4
 mkdir build
 cd build
 cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release -DConvectionDiffusion=ON ..
+make -j16
+
+# Xeus kernel
+cd $HOME/opt/
+git clone https://github.com/UG4/xeus-ug4
+mkdir xeus-ug4/build
+cd xeus-ug4/build
+cmake -D CMAKE_INSTALL_PREFIX=$CONDA_PREFIX ..
 make 
+make install
