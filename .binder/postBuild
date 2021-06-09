@@ -2,12 +2,32 @@
 mkdir $HOME/opt
 cd $HOME/opt
 git clone https://github.com/UG4/ughub
-mkdir $HOME/opt/ug4
-cd $HOME/opt/ug4
+
+export UG4_ROOT=$HOME/opt/ug4
+echo "Found ug4: $UG4_ROOT"
+
+export CONDA_PREFIX="$(python -c 'import sys; print(sys.prefix)')"
+echo "Found conda: $CONDA_PREFIX"
+
+
+# UG4
+mkdir $UG4_ROOT
+cd $UG4_ROOT
 ../ughub/ughub init
 ../ughub/ughub install Examples
 cd $HOME/opt/ug4
 mkdir build
 cd build
-cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release -DConvectionDiffusion=ON ..
+cmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang -DCMAKE_BUILD_TYPE=Release -DConvectionDiffusion=ON -DDIM="2;3" -DCPU=1 ..
+make -j12
+
+# Xeus kernel
+cd $HOME/opt/
+git clone https://github.com/UG4/xeus-ug4
+mkdir xeus-ug4/build
+cd xeus-ug4/build
+# cmake -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_C_COMPILER=clang ..
+cmake -DCMAKE_INSTALL_PREFIX=$CONDA_PREFIX ..
 make 
+make install
+
