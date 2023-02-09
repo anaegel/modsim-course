@@ -33,8 +33,8 @@ def check_subsets(dom, neededSubsets):
 
 class UG4Util:
 
-    def __init__(self, dim, algebra_type="CPU", order=1):
-        ug4.InitUG(dim, ug4.AlgebraType(algebra_type, order))
+    #def __init__(self, dim, algebra_type="CPU", order=1):
+    #    ug4.InitUG(dim, ug4.AlgebraType(algebra_type, order))
 
     # ToDo: Domain Funktionalitäten in eigene Klasse auslagern => Erben
     def create_domain(self, gridName, numRefs=None, neededSubsets=None, noIntegrityCheck=False):

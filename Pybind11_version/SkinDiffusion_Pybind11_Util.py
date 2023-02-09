@@ -10,20 +10,36 @@ import ug4py as ug4
 import pylimex as limex
 import pyconvectiondiffusion as cd
 
-from PythonUtil.py_util import UG4Util
 
-# Initialize UG4
-util = UG4Util(2, "CPU", 1)
-#ug4.InitUG(2, ug4.AlgebraType("CPU", 1))
-
-# Load domain.
+# Setup:
+# defining needed subsets, gird and number of refinements
 requiredSubsets = ["LIP", "COR", "BOTTOM_SC", "TOP_SC"]
-gridName = "skin2d-aniso.ugx"
-numRefs = 2
-dom = util.create_domain(gridName, numRefs, requiredSubsets)
+gridName = "skin2d-aniso.ugx"  # Grid created with ProMesh
+numRefs = 2  # Number of Refinement steps on given grid
+
+# Creating a 2D domain
+dom = ug4.Domain2d()
+
+# Loading the given grid in
+print(f"Loading Domain {gridName} ...")
+ug4.LoadDomain(dom, gridName)
+print("Domain loaded.")
+
+# Optional: Refining the grid
+if numRefs > 0:
+    print("Refining ...")
+    refiner = ug4.GlobalDomainRefiner(dom)
+    for i in range(numRefs):
+        ug4.TerminateAbortedRun()
+        refiner.refine()
+        print(f"Refining step {i} ...")
+
+    print("Refining done")
 
 
 # Create approximation space.
+# ERKLÄREN
+# SUBSETS ERKLÄREN
 fct = "u"
 type = "Lagrange"
 order = 1
@@ -31,7 +47,7 @@ order = 1
 approxSpace = ug4.ApproximationSpace2d(dom)
 approxSpace.add_fct(fct, type, order)
 approxSpace.init_levels()
-#approxSpace.init_surfaces()
+approxSpace.init_surfaces()  
 approxSpace.init_top_surface()
 approxSpace.print_statistic()
 
@@ -58,7 +74,7 @@ domainDisc.add(elemDisc["LIP"])
 domainDisc.add(dirichletBND)
 
 
-
+# Create Solver
 ilu=ug4.ILUCPU1()
 lsolver=ug4.LinearSolverCPU1()
 lsolver.set_preconditioner(ilu)
@@ -73,7 +89,7 @@ startTime = 0.0
 endTime = 1000.0
 dt = 25.0
 
-timeDisc=ug4.ThetaTimeStepCPU1(domainDisc, 1.0)
+timeDisc=ug4.ThetaTimeStepCPU1(domainDisc, 1.0) #ThetaTimeStep() 
 
 timeInt = limex.LinearTimeIntegrator2dCPU1(timeDisc)
 #timeInt = limex.ConstStepLinearTimeIntegrator2dCPU1(timeDisc)
