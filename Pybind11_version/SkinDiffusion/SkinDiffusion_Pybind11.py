@@ -135,3 +135,13 @@ except Exception as inst:
 # can be visualized in paraview or with a python extension
 ug4.WriteGridFunctionToVTK(usol, "Solution_SkinDif_Pybind")
 
+
+# Plotting the result using pyvista
+import pyvista
+
+result = pyvista.read('Solution_SkinDif_Pybind.vtu')
+print()
+print("Pyvista input: ")
+print(result)
+result.plot(scalars="u", cmap='coolwarm')
+#scalars="node_value", categories=True
