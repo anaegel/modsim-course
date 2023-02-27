@@ -143,5 +143,5 @@ result = pyvista.read('Solution_SkinDif_Pybind.vtu')
 print()
 print("Pyvista input: ")
 print(result)
-result.plot(scalars="u", cmap='coolwarm')
+result.plot(scalars="u", show_edges=True, cmap='coolwarm')
 #scalars="node_value", categories=True

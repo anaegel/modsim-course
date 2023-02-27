@@ -95,9 +95,16 @@ lsolver=ug4.LUCPU1()
 # which contains the right hand side
 usol = ug4.GridFunction3dCPU1(approxSpace)
 
-# Init the vector representing the unknowns with 0 to obtain
-# reproducable results
-ug4.Interpolate(0.0, usol, "u")
+# Init the vector representing the unknowns with function
+def InitialValue(x,y,z,t,si):
+    if (z<1.75):
+        return 0.0
+    else:
+        return 1.0
+
+InitialValue = "def InitialValue(x, y, z, t, si):\n    return 0.0 if (z<1.75) else 1.0\n"
+name = "InitialValue"
+ug4.Interpolate4py(InitialValue, name, usol, "u")
 
 # Define start time, end time and step size
 startTime = 0.0
@@ -134,4 +141,4 @@ result = pyvista.read('Solution_BromDif_Pybind.vtu')
 print()
 print("Pyvista input: ")
 print(result)
-result.plot(scalars="u", cmap='coolwarm')
+result.plot(scalars="u", show_edges=True, cmap='coolwarm')
