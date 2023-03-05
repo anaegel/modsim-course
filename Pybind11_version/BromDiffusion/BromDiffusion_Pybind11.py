@@ -83,10 +83,6 @@ domainDisc.add(dirichletBND)
 
 # Create Solver
 # In this case we use an LU (Lower Upper) Solver for an exact solution
-ilu=ug4.ILUCPU1()
-lsolver=ug4.LinearSolverCPU1()
-lsolver.set_preconditioner(ilu)
-
 lsolver=ug4.LUCPU1()
 
 # Solve the transient problem
@@ -96,7 +92,7 @@ lsolver=ug4.LUCPU1()
 usol = ug4.GridFunction3dCPU1(approxSpace)
 
 # Init the vector representing the unknowns with function
-# Passing the function as a string für the C++ Backend
+# Passing the function as a string for the C++ Backend
 InitialValue = "def InitialValue(x, y, z, t, si):\n    return 0.0 if (z<1.75) else 1.0\n"
 name = "InitialValue"
 ug4.Interpolate4py(InitialValue, name, usol, "u")
