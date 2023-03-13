@@ -92,15 +92,24 @@ lsolver=ug4.LUCPU1()
 usol = ug4.GridFunction3dCPU1(approxSpace)
 
 # Init the vector representing the unknowns with function
-# Passing the function as a string for the C++ Backend
-InitialValue = "def InitialValue(x, y, z, t, si):\n    return 0.0 if (z<1.75) else 1.0\n"
-name = "InitialValue"
-ug4.Interpolate4py(InitialValue, name, usol, "u")
+def MyInitialValue(x, y, z, t, si):
+    return 0.0 if (z<1.75) else 1.0
+
+try:
+    # Passing the function as a string for the C++ Backend
+    pyInitialValue=ug4.PythonUserNumber3d(MyInitialValue)
+    # pyInitialValue.evaluate(0.0, ug4.Vec3d(1.0, 0.0, 0.0), 0.0, 4) # Test
+    ug4.Interpolate(pyInitialValue, usol, "u") 
+
+except Exception as inst:
+    print(inst)
+ug4.WriteGridFunctionToVTK(usol, "BromInitial")
+
 
 # Define start time, end time and step size
 startTime = 0.0
 endTime = 1.0
-dt = 0.0125
+dt = 0.00625
 
 # create a time discretization with the theta-scheme
 # takes in domain and a theta
@@ -123,12 +132,11 @@ except Exception as inst:
 
 # Exporting the result to a vtu-file
 # can be visualized in paraview or with a python extension
-ug4.WriteGridFunctionToVTK(usol, "Solution_BromDif_Pybind")
+ug4.WriteGridFunctionToVTK(usol, "BromFinal")
 
 # Plotting the result using pyvista
 import pyvista
-
-result = pyvista.read('Solution_BromDif_Pybind.vtu')
+result = pyvista.read('BromFinal.vtu')
 print()
 print("Pyvista input: ")
 print(result)
