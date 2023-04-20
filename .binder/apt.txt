@@ -1,2 +1,2 @@
 cmake
-clang
+clang-10
